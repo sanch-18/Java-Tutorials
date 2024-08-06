@@ -1,0 +1,94 @@
+import java.util.*;
+
+class MyThread1 extends Thread{
+
+    int[] arr;
+    int n;
+
+    MyThread1(int[] arr2, int siz){
+        n = siz;
+        arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i] = arr2[i];
+        }
+    }
+
+    public void run(){
+        int sum = 0;
+        for(int i=0;i<n;i++){
+            sum += arr[i];
+        }
+        double mean = sum/n;
+        System.out.println("The mean is : "+mean);
+    }
+}
+
+class MyThread2 extends Thread{
+    int[] arr;
+    int n;
+
+    MyThread2(int[] arr2, int siz){
+        n = siz;
+        arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i] = arr2[i];
+        }
+    }
+
+    public void run(){
+        int max = arr[0];
+        for (int i = 1; i < n; i++) {
+            if (arr[i] > max)
+                max = arr[i];
+        }
+
+        System.out.println("The maximum value is : "+max);
+    }
+}
+
+class MyThread3 extends Thread{
+    int[] arr;
+    int n;
+
+    MyThread3(int[] arr2, int siz){
+        n = siz;
+        arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i] = arr2[i];
+        }
+    }
+
+    public void run(){
+        int median;
+        if(n%2==0)
+        {
+            median = arr[(n+1)/2];
+        }
+        else
+        {
+            median = (arr[n/2] + arr[n/2 + 1])/2;
+        }
+        System.out.println("The median is : "+median);
+    }
+}
+
+class Main{
+    public static void main(String[] args)
+    {
+       int n;
+       System.out.print("Enter the size of array : ");
+       Scanner sc = new Scanner(System.in);
+       n = sc.nextInt();
+       int[] arr = new int[n];
+       System.out.print("Enter the array elements : ");
+       for(int i=0;i<n;i++){
+           arr[i] = sc.nextInt();
+       }
+       MyThread1 t1 = new MyThread1(arr, n);
+       MyThread2 t2 = new MyThread2(arr, n);
+       MyThread3 t3 = new MyThread3(arr, n);
+       t1.start();
+       t2.start();
+       t3.start();
+    }
+}
